@@ -1,0 +1,37 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<div class="container">
+    <form action="login" method="post">
+    <table>
+        <tr>
+            <td>
+                <label name="id">ID</label>
+            </td>
+            <th>
+                <p th:text="${id}">아이디</p>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <a href="mycontents">내가쓴글</a>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type="button" value="마이페이지">
+            </th>
+            <th>
+                <input type="button" value="로그아웃">
+            </th>
+        </tr>
+    </table>
+    </form>
+</div>
+</body>
+</html>

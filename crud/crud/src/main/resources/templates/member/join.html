@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Join</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<div class="container">
+    <form action="join" method="post">
+        <table>
+            <tr>
+                <td>
+                    <label name="id">ID</label>
+                </td>
+                <th>
+                    <input type="text" name="id" id="id" placeholder="아이디 입력">
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <label name="password">Password</label>
+                </td>
+                <th>
+                    <input type="password" name="password" id="password" placeholder="비밀번호 입력">
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <label name="password">Password 확인</label>
+                </td>
+                <th>
+                    <input type="password" name="passCheck" id="passCheck" placeholder="비밀번호 다시 한번 입력">
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="button" onclick="location.href='/'" value="취소">
+                </th>
+                <th>
+                    <input type="submit" value="회원가입">
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
