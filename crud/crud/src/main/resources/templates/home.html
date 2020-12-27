@@ -11,10 +11,10 @@
     <table>
         <tr>
             <td>
-                <label name="id">ID</label>
+                <label name="userid">ID</label>
             </td>
             <th>
-                <p th:text="${id}">아이디</p>
+                <span th:text="${session.userid}">아이디</span>
             </th>
         </tr>
         <tr>
@@ -24,10 +24,10 @@
         </tr>
         <tr>
             <th>
-                <input type="button" value="마이페이지">
+                <input type="button" onclick="location.href='mypage'" value="마이페이지">
             </th>
             <th>
-                <input type="button" value="로그아웃">
+                <input type="button" onclick="location.href='logout'" value="로그아웃">
             </th>
         </tr>
     </table>

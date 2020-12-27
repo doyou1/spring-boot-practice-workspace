@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface SDJPAMemberRepository extends JpaRepository<Member, Long>, MemberRepository{
 
     @Override
-    Optional<Member> findById(String id);
+    Optional<Member> findByUserid(String userid);
 
 }

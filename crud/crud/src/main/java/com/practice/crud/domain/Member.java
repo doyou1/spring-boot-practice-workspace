@@ -1,32 +1,29 @@
 package com.practice.crud.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long num;
-    private String id;
+    private Long id;
+    private String userid;
     private String password;
 
-    public Long getNum() {
-        return num;
-    }
-
-    public void setNum(Long num) {
-        this.num = num;
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getPassword() {
@@ -40,8 +37,8 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "num=" + num +
-                ", id='" + id + '\'' +
+                "num=" + id +
+                ", id='" + userid + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

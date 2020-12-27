@@ -12,6 +12,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpSession session) {
-        return session.getAttribute("id") != null ? "home" : "member/notLogin";
+        return session.getAttribute("userid") != null ? "home" : "member/notLogin";
     }
 }

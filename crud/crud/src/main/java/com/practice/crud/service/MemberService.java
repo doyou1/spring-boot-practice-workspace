@@ -26,20 +26,19 @@ public class MemberService {
         validateDuplicateMember(member);
 
         memberRepository.save(member);
-        return member.getNum();
+        return member.getId();
     }
 
-    public Member findById(String id) {
-        Optional<Member> member = memberRepository.findById(id);
-
-        return member.get();
+    public Optional<Member> findByUserid(String userid) {
+        Optional<Member> member = memberRepository.findByUserid(userid);
+        return member.isPresent() ? member : Optional.empty();
     }
     /**
      * 중복 확인 method
      * @param member
      */
     private void validateDuplicateMember(Member member) {
-        memberRepository.findById(member.getId())
+        memberRepository.findByUserid(member.getUserid())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 ID입니다.");
                 });

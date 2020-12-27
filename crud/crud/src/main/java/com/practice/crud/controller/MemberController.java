@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 public class MemberController {
@@ -21,15 +22,27 @@ public class MemberController {
 
     @PostMapping("login")
     public String login(Member member, HttpSession session) {
-        Member dbMember = memberService.findById(member.getId());
+        Optional<Member> dbMember = memberService.findByUserid(member.getUserid());
 
-        if(member.getId().equals(dbMember.getId())
-            && member.getPassword().equals(dbMember.getPassword())){
-            session.setAttribute("id",member.getId());
+        if(dbMember.isPresent()){
+            if(member.getUserid().equals(dbMember.get().getUserid())
+                    && member.getPassword().equals(dbMember.get().getPassword())){
+                session.setAttribute("userid",member.getUserid());
+            }
+            else {
+                throw new IllegalStateException("아이디나 비밀번호가 틀립니다.");
+            }
         }
         else {
             throw new IllegalStateException("아이디나 비밀번호가 틀립니다.");
         }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session){
+        session.setAttribute("userid",null);
 
         return "redirect:/";
     }
@@ -42,8 +55,9 @@ public class MemberController {
 
     @PostMapping("join")
     public String join(Member member, String passCheck, HttpSession session) {
-        System.out.println(member.toString());
-        System.out.println(passCheck);
+        if(member.getPassword().equals(passCheck)) {
+            memberService.join(member);
+        }
         return "redirect:/";
     }
 
