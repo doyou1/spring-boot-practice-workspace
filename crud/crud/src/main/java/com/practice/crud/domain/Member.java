@@ -37,8 +37,8 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "num=" + id +
-                ", id='" + userid + '\'' +
+                "id=" + id +
+                ", userid='" + userid + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

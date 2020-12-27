@@ -25,7 +25,8 @@ public class MemberService {
         // DB에 같은 ID 있는지 확인
         validateDuplicateMember(member);
 
-        memberRepository.save(member);
+        member = memberRepository.save(member);
+
         return member.getId();
     }
 

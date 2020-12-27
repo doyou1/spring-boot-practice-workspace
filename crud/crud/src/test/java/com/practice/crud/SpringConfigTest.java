@@ -1,6 +1,5 @@
 package com.practice.crud;
 
-import com.practice.crud.domain.Board;
 import com.practice.crud.repository.BoardRepository;
 import com.practice.crud.repository.MemberRepository;
 import com.practice.crud.service.BoardService;
@@ -10,16 +9,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SpringConfig {
+public class SpringConfigTest {
 
-    private final MemberRepository memberRepository;
-    private final BoardRepository boardRepository;
+    MemberRepository memberRepository;
+    BoardRepository boardRepository;
 
     @Autowired
-    public SpringConfig(MemberRepository memberRepository, BoardRepository boardRepository) {
+    public SpringConfigTest(MemberRepository memberRepository, BoardRepository boardRepository) {
         this.memberRepository = memberRepository;
         this.boardRepository = boardRepository;
     }
+
+    public SpringConfigTest() {
+    }
+
     @Bean
     public MemberService memberService() {
         return new MemberService(memberRepository);
@@ -30,3 +33,4 @@ public class SpringConfig {
     }
 
 }
+

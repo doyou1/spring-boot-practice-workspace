@@ -24,17 +24,21 @@ public class MemberController {
     public String login(Member member, HttpSession session) {
         Optional<Member> dbMember = memberService.findByUserid(member.getUserid());
 
-        if(dbMember.isPresent()){
-            if(member.getUserid().equals(dbMember.get().getUserid())
-                    && member.getPassword().equals(dbMember.get().getPassword())){
-                session.setAttribute("userid",member.getUserid());
+        try{
+            if(dbMember.isPresent()){
+                if(member.getUserid().equals(dbMember.get().getUserid())
+                        && member.getPassword().equals(dbMember.get().getPassword())){
+                    session.setAttribute("userid",member.getUserid());
+                }
+                else {
+                    throw new IllegalStateException("아이디나 비밀번호가 틀립니다.");
+                }
             }
             else {
                 throw new IllegalStateException("아이디나 비밀번호가 틀립니다.");
             }
-        }
-        else {
-            throw new IllegalStateException("아이디나 비밀번호가 틀립니다.");
+        } catch(IllegalStateException e) {
+            e.printStackTrace();
         }
 
         return "redirect:/";
