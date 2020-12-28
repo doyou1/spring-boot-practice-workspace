@@ -20,4 +20,9 @@ public interface SDJPABoardRepository extends JpaRepository<Board, Long>, BoardR
     @Query("update Board set title = :#{#board.title}, text = :#{#board.text} WHERE id = :#{#board.id}")
     Integer update(@Param("board")Board board);
 
+    @Override
+    @Modifying
+    @Query("delete from Board WHERE id = :id")
+    Integer delete(@Param("id")Long id);
+
 }

@@ -75,9 +75,8 @@ public class BoardController {
 
     @DeleteMapping("board/{id}")
     @ResponseBody
-    public Long deleteBoard(@PathVariable("id") Long id) {
-        System.out.println("id = " + id);
-        return id;
+    public Integer deleteBoard(@PathVariable("id") Long id) {
+        return boardService.delete(id);
     }
     /**
      * 특정 게시물 수정 폼 이동 Request
@@ -102,7 +101,10 @@ public class BoardController {
     @PostMapping(value = "board/update/{id}")
     public String updateBoard(Board board, HttpSession session){
         board.setWriter((String)session.getAttribute("userid"));
-        boardService.update(board);
+        Integer check = boardService.update(board);
+
+        if(check != 0)
+            System.out.println("UPDATE SUCCESS");
         return "redirect:/board/"+board.getId();
     }
 

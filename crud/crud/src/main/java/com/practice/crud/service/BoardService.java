@@ -42,7 +42,13 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public void update(Board board) {
-        boardRepository.update(board);
+    public Integer update(Board board) {
+        Integer check = boardRepository.update(board);
+        return check;
+    }
+
+    public Integer delete(Long id) {
+        Integer check = boardRepository.delete(id);
+        return check;
     }
 }

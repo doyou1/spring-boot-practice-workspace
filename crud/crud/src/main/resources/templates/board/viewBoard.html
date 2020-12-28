@@ -11,9 +11,8 @@
     function deleteBoard(id) {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
-                console.log(response);
-            }
+            if(this.readyState == 4 && this.status == 200 && this.response)
+                location.href="/boardList";
         }
         xmlHttp.open("DELETE", `/board/${id}`, true);
         xmlHttp.send();
@@ -56,7 +55,7 @@
                 <th colspan="2">
                     <input type="button" value="삭제" th:onclick="'deleteBoard('+@{${board.id}}+')'">
                     <input type="button" value="수정" th:onclick="'location.href=\''+'/board/update/'+@{${board.id}}+'\''">
-                    <input type="button" value="글목록" onclick="location.href='boardList'">
+                    <input type="button" value="글목록" onclick="location.href='/boardList'">
                 </th>
             </tr>
         </table>
