@@ -7,14 +7,14 @@
 <body>
 
 <div class="container">
-    <form action="/board/write" method="post">
+    <form th:action="@{/board/update/}+@{${board.id}}" method="POST">
         <table>
             <tr>
                 <td>
                     <label name="title">Title</label>
                 </td>
                 <th>
-                    <input type="text" name="title" id="title">
+                    <input type="text" name="title" id="title" th:value="${board.title}">
                 </th>
             </tr>
             <tr>
@@ -26,14 +26,22 @@
                 </th>
             </tr>
             <tr>
-                <th colspan="2">
-                    <textarea name="text" cols="30" rows="15"></textarea>
+                <td>
+                    <label>작성일</label>
+                </td>
+                <th>
+                    <p th:text="${board.date}">작성일</p>
                 </th>
             </tr>
             <tr>
                 <th colspan="2">
-                    <input type="button" value="취소" onclick="location.href='/boardList'">
-                    <input type="submit" value="글쓰기">
+                    <textarea name="text" cols="30" rows="15" th:text="${board.text}"></textarea>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="button" value="취소" th:onclick="'location.href=\'/'+@{board/}+@{${board.id}}+'\''">
+                    <input type="submit" value="수정">
                 </th>
             </tr>
         </table>

@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface BoardRepository {
 
     Board save(Board board);
+    Optional<Board> findById(Long id);
     List<Board> findByWriter(String userid);
     List<Board> findAll();
+    Integer update(Board board);
 }

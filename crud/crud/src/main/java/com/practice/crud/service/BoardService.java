@@ -20,6 +20,14 @@ public class BoardService {
     public Board save(Board board) {
         return boardRepository.save(board);
     }
+    public Board findById(Long id) {
+        Optional<Board> board = boardRepository.findById(id);
+        if(board.isPresent()) {
+            return board.get();
+        }else{
+            throw new IllegalStateException("userid에 맞는 게시물이 없습니다.");
+        }
+    }
 
     public List<Board> findByUserid(String userid) {
         List<Board> list = boardRepository.findByWriter(userid);
@@ -34,4 +42,7 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    public void update(Board board) {
+        boardRepository.update(board);
+    }
 }

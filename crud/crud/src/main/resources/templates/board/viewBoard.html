@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ViewBoard</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+</head>
+<script type="text/javascript">
+
+
+
+    function deleteBoard(id) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                console.log(response);
+            }
+        }
+        xmlHttp.open("DELETE", `/board/${id}`, true);
+        xmlHttp.send();
+    };
+</script>
+
+<body>
+<div class="container">
+        <table>
+            <tr>
+                <td>
+                    <label name="title">Title</label>
+                </td>
+                <th>
+                    <p th:text="${board.title}"></p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <label>작성자</label>
+                </td>
+                <th>
+                    <p th:text="${session.userid}">작성자</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <label>작성일</label>
+                </td>
+                <th>
+                    <p th:text="${board.date}">작성일</p>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <div th:text="${board.text}"></div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="button" value="삭제" th:onclick="'deleteBoard('+@{${board.id}}+')'">
+                    <input type="button" value="수정" th:onclick="'location.href=\''+'/board/update/'+@{${board.id}}+'\''">
+                    <input type="button" value="글목록" onclick="location.href='boardList'">
+                </th>
+            </tr>
+        </table>
+</div>
+</body>
+</html>

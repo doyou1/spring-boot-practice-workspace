@@ -19,7 +19,7 @@
         <tbody>
         <tr th:each="board : ${list}">
             <th th:text="${board.id}" />
-            <th th:text="${board.title}" />
+            <th><a th:href="@{board/}+@{${board.id}}"><span th:text="${board.title}"></span></a></th>
             <th th:text="${board.writer}" />
             <th th:text="${board.date}" />
         </tr>
