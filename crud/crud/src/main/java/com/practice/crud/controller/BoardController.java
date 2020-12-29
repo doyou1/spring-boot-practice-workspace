@@ -1,16 +1,23 @@
 package com.practice.crud.controller;
 
 import com.practice.crud.domain.Board;
+import com.practice.crud.domain.FileDomain;
 import com.practice.crud.service.BoardService;
+import com.practice.crud.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.http.HttpHeaders;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -57,10 +64,14 @@ public class BoardController {
     public String writeBoard(Board board, MultipartFile file, HttpSession session) {
         board.setDate(LocalDate.now());
         board.setWriter((String) session.getAttribute("userid"));
-        System.out.println(board.toString());
-        board = boardService.save(board);
-        System.out.println(board.toString());
-        System.out.println(file.getOriginalFilename());
+
+        if(!file.isEmpty()) {
+            FileDomain fileDomain = FileService.save(file);
+            board.setOriginal(fileDomain.getOriginal());
+            board.setSaved(fileDomain.getSaved());
+        }
+
+        boardService.save(board);
 
         return "redirect:/boardList";
     }
@@ -113,5 +124,16 @@ public class BoardController {
         return "redirect:/board/"+board.getId();
     }
 
+    @GetMapping("downloadFile/{fileName}")
+    @ResponseBody
+    public Resource downloadFile(@PathVariable String fileName) {
+        InputStream is = null;
+        try{
+             is = FileService.download(fileName);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
 
+        return new InputStreamResource(is);
+    }
 }

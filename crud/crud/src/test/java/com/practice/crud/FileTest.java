@@ -1,6 +1,8 @@
 package com.practice.crud;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +13,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 
 public class FileTest {
+
+    private static final String uploadPath = "src/main/resources/static/uploadFolder/";
 
     /**
      * MultipartFile save method
@@ -70,7 +74,13 @@ public class FileTest {
 
         System.out.println("original : " + original);
         System.out.println("saved : " + saved);
-
-
     }
+
+    @Test
+    void pathTest() {
+        Path path = Paths.get(uploadPath);
+
+        System.out.println(path.toFile());
+    }
+
 }

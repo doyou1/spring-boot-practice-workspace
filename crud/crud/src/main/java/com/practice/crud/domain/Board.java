@@ -15,6 +15,8 @@ public class Board {
     private String title;
     private String text;
     private LocalDate date;
+    private String original;
+    private String saved;
 
     public Long getId() {
         return id;
@@ -56,6 +58,22 @@ public class Board {
         this.date = date;
     }
 
+    public String getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(String original) {
+        this.original = original;
+    }
+
+    public String getSaved() {
+        return saved;
+    }
+
+    public void setSaved(String saved) {
+        this.saved = saved;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
@@ -64,6 +82,8 @@ public class Board {
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", date=" + date +
+                ", original='" + original + '\'' +
+                ", saved='" + saved + '\'' +
                 '}';
     }
 }

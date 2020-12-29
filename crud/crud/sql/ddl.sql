@@ -14,5 +14,9 @@ create table board
  writer varchar(255),
  title varchar(255),
  text varchar(2000),
+ original varchar(255),
+ saved varchar(255),
  date date default current_date
 );
+
+insert into member (userid,password) values('test','test');

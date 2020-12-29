@@ -14,6 +14,7 @@ import java.util.Optional;
 @Transactional
 public class MemberControllerTest {
 
+    @Autowired
     MemberService memberService;
 
     @Autowired

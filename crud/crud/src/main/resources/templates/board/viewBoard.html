@@ -6,16 +6,45 @@
 </head>
 <script type="text/javascript">
 
-
-
     function deleteBoard(id) {
-        var xmlHttp = new XMLHttpRequest();
+        const xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200 && this.response)
                 location.href="/boardList";
         }
         xmlHttp.open("DELETE", `/board/${id}`, true);
         xmlHttp.send();
+    };
+
+    function downloadFile(fileName) {
+
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+          var a;
+			  if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+				if (typeof window.navigator.msSaveBlob !== 'undefined') {
+				  window.navigator.msSaveBlob(xmlHttp.response, fileName);
+				} else {
+				  a = document.createElement('a');
+				  a.href = window.URL.createObjectURL(xmlHttp.response);
+				  a.download = fileName;
+				  a.style.display = 'none';
+				  document.body.appendChild(a);
+				  a.click();
+				}
+			  } else if (xmlHttp.readyState === 4) {
+				var reader = new FileReader();
+				reader.addEventListener('loadend', (e) => {
+				  var errorMessage = JSON.parse(e.srcElement['result']);
+				});
+				reader.readAsText(xmlHttp.response);
+				this.loading = false;
+			  }
+			};
+			xmlHttp.open('GET', '/downloadFile/'+fileName);
+			// xhttp.setRequestHeader('X-Auth-Token', `${token}`);
+			xmlHttp.responseType = 'blob';
+			xmlHttp.send();
     };
 </script>
 
@@ -49,6 +78,12 @@
             <tr>
                 <th colspan="2">
                     <div th:text="${board.text}"></div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <img th:src="@{/uploadFolder/}+@{${board.saved}}"  width="100" height="100"/>
+                    <p><a href="javascript:void(0)" th:onclick="'downloadFile(\''+@{${board.saved}}+'\')'" th:text="${board.original}"></a></p>
                 </th>
             </tr>
             <tr>
