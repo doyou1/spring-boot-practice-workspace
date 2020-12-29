@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -51,12 +54,14 @@ public class BoardController {
      * @return 게시판 이동
      */
     @PostMapping("board/write")
-    public String writeBoard(Board board, HttpSession session) {
+    public String writeBoard(Board board, MultipartFile file, HttpSession session) {
         board.setDate(LocalDate.now());
         board.setWriter((String) session.getAttribute("userid"));
         System.out.println(board.toString());
         board = boardService.save(board);
         System.out.println(board.toString());
+        System.out.println(file.getOriginalFilename());
+
         return "redirect:/boardList";
     }
 
