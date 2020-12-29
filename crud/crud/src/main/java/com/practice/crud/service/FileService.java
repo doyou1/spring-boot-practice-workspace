@@ -45,6 +45,12 @@ public class FileService {
         return fileDomain;
     }
 
+    public static boolean remove(String fileName) {
+        File file = new File(uploadPath,fileName);
+        if(file.exists()) { return file.delete(); }
+        return false;
+    }
+
     public static InputStream download(String fileName) throws IOException {
         File file = new File(uploadPath + fileName);
         return FileUtils.openInputStream(file);

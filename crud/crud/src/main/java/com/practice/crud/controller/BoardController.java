@@ -86,6 +86,7 @@ public class BoardController {
     public String viewBoard(@PathVariable("id") Long id, Model model){
         Board board = boardService.findById(id);
         model.addAttribute("board", board);
+        board.setText(board.getText().replace("\r\n","<br>"));
         return "board/viewBoard";
     }
 
@@ -115,8 +116,22 @@ public class BoardController {
      * @return 수정한 특정 게시물 이동
      */
     @PostMapping(value = "board/update/{id}")
-    public String updateBoard(Board board, HttpSession session){
+    public String updateBoard(Board board,MultipartFile file,HttpSession session){
         board.setWriter((String)session.getAttribute("userid"));
+
+        Board prevBoard = boardService.findById(board.getId());
+        board.setOriginal(prevBoard.getOriginal());
+        board.setSaved(prevBoard.getSaved());
+        if(!file.isEmpty()) {
+            System.out.println(file.getOriginalFilename());
+            FileDomain fileDomain = FileService.save(file);
+            board.setOriginal(fileDomain.getOriginal());
+            board.setSaved(fileDomain.getSaved());
+
+            if(prevBoard.getSaved() != null) {
+                FileService.remove(prevBoard.getSaved());
+            }
+        }
         Integer check = boardService.update(board);
 
         if(check != 0)

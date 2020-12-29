@@ -47,8 +47,8 @@
 			xmlHttp.send();
     };
 </script>
-
 <body>
+<th:block th:include="/fragments/navigator.html"></th:block>
 <div class="container">
         <table>
             <tr>
@@ -76,9 +76,9 @@
                 </th>
             </tr>
             <tr>
-                <th colspan="2">
-                    <div th:text="${board.text}"></div>
-                </th>
+                <td colspan="2">
+                    <div th:utext="${board.text}"></div>
+                </td>
             </tr>
             <tr>
                 <th colspan="2">

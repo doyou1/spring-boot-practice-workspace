@@ -17,7 +17,7 @@ public interface SDJPABoardRepository extends JpaRepository<Board, Long>, BoardR
     Optional<Board> findById(Long id);
     @Override
     @Modifying
-    @Query("update Board set title = :#{#board.title}, text = :#{#board.text} WHERE id = :#{#board.id}")
+    @Query("update Board set title = :#{#board.title}, text = :#{#board.text}, original = :#{#board.original}, saved = :#{#board.saved} WHERE id = :#{#board.id}")
     Integer update(@Param("board")Board board);
 
     @Override
