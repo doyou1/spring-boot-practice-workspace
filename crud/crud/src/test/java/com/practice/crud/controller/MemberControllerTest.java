@@ -3,6 +3,7 @@ package com.practice.crud.controller;
 
 import com.practice.crud.domain.Member;
 import com.practice.crud.repository.MemberRepository;
+import com.practice.crud.repository.TodoRepository;
 import com.practice.crud.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,8 @@ public class MemberControllerTest {
     MemberService memberService;
 
     @Autowired
-    public MemberControllerTest(MemberRepository memberRepository) {
-        memberService = new MemberService(memberRepository);
+    public MemberControllerTest(MemberRepository memberRepository, TodoRepository todoRepository) {
+        memberService = new MemberService(memberRepository, todoRepository);
     }
 
     @Test

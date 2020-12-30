@@ -1,13 +1,17 @@
 package com.practice.crud.controller;
 
 import com.practice.crud.domain.Member;
+import com.practice.crud.domain.Todo;
 import com.practice.crud.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -65,4 +69,28 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @PostMapping("todo/save")
+    @ResponseBody
+    public Todo todoSave(String data, HttpSession session) {
+        Todo todo = new Todo();
+        todo.setText(data);
+        todo.setWriter((String)session.getAttribute("userid"));
+        todo.setDate(LocalDate.now());
+
+        return memberService.todoSave(todo);
+    }
+    @PostMapping("todo/update")
+    @ResponseBody
+    public Integer todoUpdate(Todo todo, HttpSession session) {
+        todo.setWriter((String) session.getAttribute("userid"));
+
+        return memberService.todoUpdate(todo);
+    }
+    @PostMapping("todo/delete")
+    @ResponseBody
+    public Integer todoDelete(Todo todo, HttpSession session) {
+        todo.setWriter((String) session.getAttribute("userid"));
+
+        return memberService.todoDelete(todo);
+    }
 }

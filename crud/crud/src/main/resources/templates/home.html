@@ -4,6 +4,113 @@
     <title>Home</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 </head>
+<style>
+<!--    *{-->
+<!--        margin : 0;-->
+<!--        padding : 0;-->
+<!--    }-->
+</style>
+<script>
+    function todoInputFn(event){
+        if(event.keyCode == 13) {
+            todoSave();
+        }
+    }
+    function todoSave(){
+        const todoText = document.getElementById("todoText");
+        if(todoText.value.length > 0) {
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200){
+                    location.reload();
+
+<!--                Element.innerHTML로 태그 추가시 DOM으로 적용되지 않아 CSS 적용이 안됨 그래서 reload 선택-->
+<!--                    const todoBody = document.getElementById("todoBody");-->
+<!--                    const tr = document.createElement("tr");-->
+<!--                    const td1 = document.createElement("td");-->
+<!--                    const th2 = document.createElement("th");-->
+<!--                    const td3 = document.createElement("td");-->
+
+<!--                    const result =JSON.parse(this.response);-->
+
+<!--                    td1.textContent = result.id;-->
+<!--                    th2.textContent = result.text;-->
+<!--                    td3.innerHTML =-->
+<!--                    '<input type="button" onclick="todoUpdate('+ (result.id) +')" value="수정">' +-->
+<!--                    '<input type="button" onclick="todoDelete('+ (result.id) +')"value="삭제">';-->
+<!--                    console.log(td3);-->
+<!--                    tr.appendChild(td1);-->
+<!--                    tr.appendChild(th2);-->
+<!--                    tr.appendChild(td3);-->
+<!--                    todoBody.appendChild(tr);-->
+                }
+            }
+            xmlHttp.open('POST', 'todo/save');
+            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttp.send(`data=${todoText.value}`);
+        }
+    }
+
+    let check = false;
+    function todoUpdate(t,id){
+        <!--DOM의 모든 것은 노드로 표시됩니다. 일반 텍스트 포함.-->
+        <!--사용자의 경우 텍스트 노드는 형식 지정에 사용할 수 있는 요소의 공백에서 가져옵니다. 그 텍스트는 다른 텍스트와 마찬가지로 카운트됩니다.-->
+
+        // 위와 같은 이유로 tag 사이에 #text node가 있음 그래서 두번째 이전 형제를 선택함
+        const textTag = t.parentElement.previousSibling.previousSibling;
+
+        // 최초 수정버튼 눌러 input text 표시
+        if(!check) {
+            const prevText = textTag.textContent;
+            textTag.innerHTML = `<input type="text" value=${prevText} >`;
+            check = true;
+
+            return;
+        }
+
+        // input text 수정후 ajax 요청
+        else if(check){
+            const prevText = textTag.firstChild.value;
+            const xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200 && this.response > 0){
+                    location.reload();
+                }
+            }
+            xmlHttp.open("Post", "/todo/update");
+            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttp.send(`id=${id}&&text=${prevText}`);
+
+            check = false;
+        }
+
+<!--        check = false;-->
+<!--        alert("Update Text Check Please...");-->
+
+    }
+    function todoDelete(t,id){
+        if(confirm(`정말 삭제하시겠습니까`)){
+        const xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200 && this.response > 0){
+                    location.reload();
+                }
+            }
+            xmlHttp.open("Post", "/todo/delete");
+            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttp.send(`id=${id}`);
+        }
+    }
+
+    window.onload = function(){
+
+        const todoBtn = document.getElementById("todoBtn");
+        todoBtn.addEventListener("click",todoSave);
+        const todoInput = document.getElementById("todoText");
+        todoInput.addEventListener("keydown",todoInputFn);
+    }
+
+</script>
 <body>
 <th:block th:include="/fragments/navigator.html"></th:block>
 <div class="container">
@@ -26,15 +133,42 @@
             </th>
         </tr>
         <tr>
-            <th>
-                <input type="button" onclick="location.href='mypage'" value="마이페이지">
-            </th>
-            <th>
+            <th colspan="2">
                 <input type="button" onclick="location.href='logout'" value="로그아웃">
             </th>
         </tr>
     </table>
     </form>
+    <table>
+        <thead>
+        <tr>
+            <td>
+                ToDoList
+            </td>
+            <th>
+                <input type="text" id="todoText" autofocus>
+            </th>
+            <td>
+                <input type="button" id="todoBtn" value="등록">
+            </td>
+        </tr>
+        <tr>
+            <td>#</td>
+            <th>ToDo</th>
+            <td>/</td>
+        </tr>
+        </thead>
+        <tbody id="todoBody">
+        <tr th:each="todo : ${todoList}">
+            <td th:text="${todo.id}"></td>
+            <th th:text="${todo.text}"></th>
+            <td>
+                <input type="button" th:onclick="todoUpdate(this,[[${todo.id}]])" value="수정">
+                <input type="button" th:onclick="todoDelete(this,[[${todo.id}]])"value="삭제">
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
