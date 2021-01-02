@@ -1,0 +1,6 @@
+- 1일1커밋한다고 좀 급하게 한 것만 같다. 반성!
+- Springboot + Spring Data JPA + RESTful CRUD 연습 예제
+- 강의 : https://www.youtube.com/watch?v=Xb0OEOiZ3Rg&t=482s
+- 소스코드 : https://github.com/leejongcheol/springbootrest
+- 배운점 : Spring Data JPA에서 update시에는 이미 존재하는 id값과 새로운 set할 data를 입력하고, save를 하면 된다.! spring이 알아서 update 쿼리로 변환해준다! 배웠다(너무 초보적으로 말한다..)
+- https://shlee0882.tistory.com/257
