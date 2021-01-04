@@ -27,7 +27,7 @@ public class Role extends AbstractEntity implements AggregateRoot{
         super();
     }
 
-    public Role(String name, Boolean roleUsage, RoleDivision roleDivision) {
+    public Role(String name, RoleDivision roleDivision, Boolean roleUsage) {
         this.name = name;
         this.roleUsage = roleUsage;
         this.roleDivision = roleDivision;
