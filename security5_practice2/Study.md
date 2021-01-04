@@ -1,0 +1,4 @@
+- SecurityConfig 클래스 파일 : Spring Security 설정파일
+- 예제 디렉토리를 살펴보니 Domain을 중심으로 Repo와 Service를 구성을 한다는 것을 확인했다
+    - 역할에 따라 도메인을 여러개로 나눠서 AbstractEntity 클래스로 묶어서 하나의 인스턴스로 구성하더라..
+    - 새로운 방식의 구조를 익혔다?? 아니 봤다.
