@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hello-spring/hello-spring" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/springdatajpa-rest-crud/hello-spring/hello-spring" vcs="Git" />
   </component>
 </project>
