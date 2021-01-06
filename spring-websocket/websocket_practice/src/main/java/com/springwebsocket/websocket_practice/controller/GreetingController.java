@@ -10,7 +10,10 @@ import org.springframework.web.util.HtmlUtils;
 @Controller
 public class GreetingController {
 
-    @MessageMapping("/hello")
+    // 수신
+    // config.setApplicationDestinationPrefixes("/app") 이기때문에 /app/hello
+    @MessageMapping("/hello")   
+    // 송신
     @SendTo("/topic/greetings")
     public Greeting greeting(Message message) throws Exception {
         Thread.sleep(1000); // simulated delay
